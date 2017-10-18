@@ -6,6 +6,7 @@ require_once 'Autoloader.php';
 
 $worker = new Worker('websocket://0.0.0.0:8282');
 $worker->uidConnections = array();
+$worker->amdinConnections = array();
 
 function sendMessageByUid($uid, $message)
 {

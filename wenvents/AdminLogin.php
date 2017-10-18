@@ -11,7 +11,11 @@ class AdminLogin extends Admin
 			throw new Exception("pwd fail");
 		}
 
+		if (!isset($data['admin_id'])) {
+			throw new Exception("登录缺少 admin_id");
+		}
+
 		$worker->amdinConnections[$data['admin_id']] = $connection;
-		print_r(count($worker->amdinConnections));
+		echo 'now connections number:'.count($worker->amdinConnections).PHP_EOL;
 	}
 }

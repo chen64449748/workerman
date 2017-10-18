@@ -11,10 +11,12 @@ class OrderAdminSend extends Admin
 			throw new Exception("pwd fail");
 		}
 
-		if (!$worker->amdinConnections) {return;}
+		if (!$worker->amdinConnections) {throw new Exception("no admin");}
+
+		$return_data = array('order_id'=> $data['order_id'], 'message'=> '您有新的订单，请注意查收');
 
 		foreach ($worker->amdinConnections as $value) {
-			$value->send(json_encode(array('order_id'=> $data['order_id'], 'message'=> '您有新的订单，请注意查收')));
+			$value->send(json_encode(array('action'=> 'OrderAdminSend', 'data'=> $return_data)));
 		}
 
 	}
