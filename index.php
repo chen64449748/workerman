@@ -51,4 +51,7 @@ $worker->onMessage = function ($connection, $buffer) use ($worker){
 };
 
 
+Worker::$daemonize = true;
+Worker::$stdoutFile = '/tmp/workmanstdout.log';
+Worker::$logFile = '/tmp/workerman.log';
 Worker::runAll();
