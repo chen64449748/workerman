@@ -39,6 +39,7 @@ $worker->onWorkerStart = function ($worker) {
     $inner_text_worker->listen();
 };
 
+
 $worker->onMessage = function ($connection, $buffer) use ($worker){
     try {
         $events = new Envents();
@@ -50,6 +51,20 @@ $worker->onMessage = function ($connection, $buffer) use ($worker){
     }
 };
 
+// 1分钟检查一次
+$worker->onError = function ($connection, $code, $message) 
+{
+    echo $message;
+};
+
+$worker->onClose = function($connection) use ($worker)
+{
+    $admin_id = array_search($connection, $worker->amdinConnections);
+    if ($admin_id) {
+        unset($worker->amdinConnections[$admin_id]);
+        echo 'unset'.$admin_id.PHP_EOL;
+    }
+};
 
 Worker::$daemonize = true;
 Worker::$stdoutFile = '/tmp/workmanstdout.log';
